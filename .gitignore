@@ -1,0 +1,38 @@
+# Godot
+.godot/
+*.exe
+*.zip
+*.so
+*.dylib
+*.dll
+*.su
+*.po
+*.pot
+*.gd.rn
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+.env
+
+# Build outputs
+builds/
+exports/
+*.pck
+*.elf
+
+# Temporary
+*.tmp
+*.bak
+*.log
+
+# Local testing
+local_builds/
+test_builds/
