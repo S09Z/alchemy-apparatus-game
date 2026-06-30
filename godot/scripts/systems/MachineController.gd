@@ -131,6 +131,8 @@ func reset() -> void:
 	_heat_slider.value = 0.5
 	if _vent_slider:
 		_vent_slider.value = 0.0
+	_filter_label.text = FILTER_NAMES[filter_index]
+	_filter_display.color = FILTER_COLORS[filter_index]
 	_update_recipe_display()
 
 func set_controls_enabled(enabled: bool) -> void:
