@@ -10,12 +10,14 @@ config_version=5
 [application]
 
 config/name="Alchemical Apparatus"
-run/main_scene="res://scenes/MainScene.tscn"
+run/main_scene="res://scenes/BootScene.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 
 [autoload]
 
 Constants="*res://scripts/Constants.gd"
+InputManager="*res://scripts/managers/InputManager.gd"
+ChemistrySystem="*res://scripts/systems/ChemistrySystem.gd"
 
 [display]
 
