@@ -255,10 +255,59 @@ func _update_order_panel() -> void:
 	_order_req_label.text = req_text
 
 func _rebuild_shelf() -> void:
-	pass  # implemented in Task 6
+	for btn in _ingredient_rows:
+		btn.queue_free()
+	_ingredient_rows.clear()
+	_begin_btn.visible = false
+
+	var recipe := ChemistrySystem.RECIPES[current_recipe_index]
+	var ing_ids: Array = recipe["ingredients"]
+	var W := 1280.0
+	var row_y := 220.0
+
+	for i in ing_ids.size():
+		var ing_id: String = ing_ids[i]
+		var ing: Dictionary = IngredientData.INGREDIENTS[ing_id]
+
+		var row := Button.new()
+		row.text = "  %s  [%s]" % [ing["name"], ing["type"].to_upper()]
+		row.position = Vector2(W / 2 - 200, row_y + i * 70)
+		row.size = Vector2(400, 52)
+		row.add_theme_color_override("font_color", ing["color"])
+		row.add_theme_font_size_override("font_size", 15)
+		var captured_id := ing_id
+		row.pressed.connect(func(): _on_ingredient_clicked(captured_id, row))
+		_shelf_panel.add_child(row)
+		_ingredient_rows.append(row)
+
+	_update_chamber_preview()
+
+func _on_ingredient_clicked(ing_id: String, row: Button) -> void:
+	if ing_id in loaded_ingredients:
+		return
+	loaded_ingredients.append(ing_id)
+	row.disabled = true
+	row.modulate = Color(0.5, 1.0, 0.5)
+
+	var recipe := ChemistrySystem.RECIPES[current_recipe_index]
+	var ing_list: Array = recipe["ingredients"]
+	_update_chamber_preview()
+
+	if loaded_ingredients.size() == ing_list.size():
+		_begin_btn.visible = true
 
 func _update_chamber_preview() -> void:
-	pass  # implemented in Task 6
+	if loaded_ingredients.is_empty():
+		machine._chamber_fill.color = Color(0.15, 0.15, 0.2)
+		return
+	var recipe := ChemistrySystem.RECIPES[current_recipe_index]
+	var ing_list: Array = recipe["ingredients"]
+	var total := float(ing_list.size())
+	var blended := Color(0.0, 0.0, 0.0, 0.0)
+	for id in loaded_ingredients:
+		blended += IngredientData.INGREDIENTS[id]["color"]
+	blended /= float(loaded_ingredients.size())
+	machine._chamber_fill.color = Color(0.15, 0.15, 0.2).lerp(blended, float(loaded_ingredients.size()) / total)
 
 func _update_result_panel(_success: bool, _purity: float, _stars: int, _prev_rep: int) -> void:
 	pass  # implemented in Task 7
