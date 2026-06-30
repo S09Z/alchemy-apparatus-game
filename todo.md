@@ -9,11 +9,11 @@
 
 ## 📋 QUICK START (DO THIS FIRST)
 
-- [ ] **Read claude.md** - Understand full project scope (30 min)
-- [ ] **Review memory.md** - Internalize key concepts (15 min)
+- [x] **Read claude.md** - Understand full project scope (30 min)
+- [x] **Review memory.md** - Internalize key concepts (15 min)
 - [ ] **Watch 1 Godot 4 tutorial** - 2D basics (45 min)
-- [ ] **Download Godot 4.x** - Latest version (10 min)
-- [ ] **Create GitHub repo** - Version control (10 min)
+- [x] **Download Godot 4.x** - Latest version (10 min)
+- [x] **Create GitHub repo** - Version control (10 min)
 - [ ] **Open Itch.io account** - Future hosting (5 min)
 
 **TIME THIS WEEK:** ~2 hours of setup
@@ -23,21 +23,21 @@
 ## 🎯 PHASE 1: FOUNDATION (Week 1-2) - 20 hours
 
 ### Project Setup
-- [ ] Create Godot 4 project
-- [ ] Name project "AlchemicalApparatus"
-- [ ] Create folder structure:
-  - [ ] `/scenes/` - Game scenes
-  - [ ] `/scripts/` - GDScript files
-  - [ ] `/assets/` - Images, sounds, fonts
-  - [ ] `/docs/` - Documentation
+- [x] Create Godot 4 project
+- [x] Name project "AlchemicalApparatus"
+- [x] Create folder structure:
+  - [x] `/scenes/` - Game scenes
+  - [x] `/scripts/` - GDScript files
+  - [x] `/assets/` - Images, sounds, fonts
+  - [x] `/docs/` - Documentation
   - [ ] `/exports/` - Build outputs
-- [ ] Set up GitHub repository
-- [ ] Create `.gitignore` for Godot
-- [ ] Write initial README.md
-- [ ] Configure project settings (2D focused)
+- [x] Set up GitHub repository
+- [x] Create `.gitignore` for Godot
+- [x] Write initial README.md
+- [x] Configure project settings (2D focused)
 
 ### Basic Scene Structure
-- [ ] Create MainScene.tscn (main game scene)
+- [x] Create MainScene.tscn (main game scene)
 - [ ] Create BootScene.tscn (loading screen)
 - [ ] Create UIScene.tscn (UI overlays)
 - [ ] Set up scene hierarchy
