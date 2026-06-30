@@ -1,5 +1,7 @@
 extends Node2D
 
+signal brew_completed(success: bool, purity: float)
+
 # ─── Game State ───────────────────────────────────────────────────────────────
 var ignition: bool = false
 var mixer_speed: int = 0        # 0=off 1=slow 2=med 3=fast
@@ -39,10 +41,12 @@ var _ignition_btn: Button
 var _mixer_btns: Array[Button] = []
 var _catalyst_btn: Button
 var _relief_btn: Button
+var _vent_slider: HSlider
+var _filter_prev_btn: Button
+var _filter_next_btn: Button
 var _heat_slider: HSlider
 var _filter_label: Label
 var _filter_display: ColorRect
-var _result_overlay: Panel
 
 # ─── Lifecycle ────────────────────────────────────────────────────────────────
 func _ready() -> void:
@@ -70,7 +74,6 @@ func _on_button_pressed(id: String) -> void:
 		"relief":     _trigger_relief()
 		"filter_next": _cycle_filter(1)
 		"filter_prev": _cycle_filter(-1)
-		"restart":    _restart_game()
 
 func _on_lever_changed(id: String, value: float) -> void:
 	match id:
@@ -108,7 +111,7 @@ func _cycle_filter(direction: int) -> void:
 	_filter_label.text = FILTER_NAMES[filter_index]
 	_filter_display.color = FILTER_COLORS[filter_index]
 
-func _restart_game() -> void:
+func reset() -> void:
 	ignition = false
 	mixer_speed = 0
 	heat_level = 0.5
@@ -121,14 +124,28 @@ func _restart_game() -> void:
 	purity = 100.0
 	brew_time_in_range = 0.0
 	game_state = "IDLE"
-	current_recipe = wrapi(current_recipe + 1, 0, ChemistrySystem.RECIPES.size())
 	_ignition_btn.modulate = Color(1, 1, 1)
 	for btn in _mixer_btns:
 		btn.modulate = Color(1, 1, 1)
 	_catalyst_btn.modulate = Color(1, 1, 1)
-	_result_overlay.visible = false
 	_heat_slider.value = 0.5
+	if _vent_slider:
+		_vent_slider.value = 0.0
 	_update_recipe_display()
+
+func set_controls_enabled(enabled: bool) -> void:
+	_ignition_btn.disabled = not enabled
+	for btn in _mixer_btns:
+		btn.disabled = not enabled
+	_catalyst_btn.disabled = not enabled
+	_relief_btn.disabled = not enabled
+	_heat_slider.editable = enabled
+	if _vent_slider:
+		_vent_slider.editable = enabled
+	if _filter_prev_btn:
+		_filter_prev_btn.disabled = not enabled
+	if _filter_next_btn:
+		_filter_next_btn.disabled = not enabled
 
 # ─── Physics simulation ───────────────────────────────────────────────────────
 func _simulate_physics(delta: float) -> void:
@@ -165,12 +182,12 @@ func _check_game_state() -> void:
 		return
 	if purity <= 0.0 or pressure >= Constants.MAX_PRESSURE:
 		game_state = "FAILURE"
-		_show_result(false)
+		brew_completed.emit(false, purity)
 		return
 	var result := ChemistrySystem.evaluate_brew(brew_time_in_range, purity, used_catalyst, filter_index, current_recipe)
 	if result["success"]:
 		game_state = "SUCCESS"
-		_show_result(true, result["quality"])
+		brew_completed.emit(true, purity)
 
 # ─── UI update ────────────────────────────────────────────────────────────────
 func _update_ui() -> void:
@@ -215,16 +232,6 @@ func _update_recipe_display() -> void:
 			recipe["brew_time"]
 		]
 	)
-
-func _show_result(success: bool, quality: String = "") -> void:
-	_result_overlay.visible = true
-	var lbl := _result_overlay.get_node("Label") as Label
-	if success:
-		lbl.text = "✓ BREW COMPLETE\n%s — Purity %.0f%%\n\n[Next →]" % [quality, purity]
-		lbl.modulate = Color(0.4, 1.0, 0.5)
-	else:
-		lbl.text = "✗ BREW FAILED\nPurity %.0f%%\n\n[Retry →]" % purity
-		lbl.modulate = Color(1.0, 0.3, 0.2)
 
 # ─── UI construction ──────────────────────────────────────────────────────────
 func _build_ui() -> void:
@@ -475,6 +482,7 @@ func _build_ui() -> void:
 	vent_slider.max_value = 1.0
 	vent_slider.step = 1.0
 	add_child(vent_slider)
+	_vent_slider = vent_slider
 
 	# Filter buttons
 	var filter_lbl := Label.new()
@@ -491,6 +499,7 @@ func _build_ui() -> void:
 	prev_btn.position = Vector2(510, lever_y + 18)
 	prev_btn.size = Vector2(30, 26)
 	add_child(prev_btn)
+	_filter_prev_btn = prev_btn
 
 	var next_btn := Button.new()
 	next_btn.set_script(btn_script)
@@ -499,34 +508,4 @@ func _build_ui() -> void:
 	next_btn.position = Vector2(620, lever_y + 18)
 	next_btn.size = Vector2(30, 26)
 	add_child(next_btn)
-
-	# ── Result overlay ──────────────────────────────────────────────────────
-	_result_overlay = Panel.new()
-	_result_overlay.position = Vector2(W / 2 - 200, H / 2 - 100)
-	_result_overlay.size = Vector2(400, 200)
-	_result_overlay.visible = false
-	add_child(_result_overlay)
-
-	var result_lbl := Label.new()
-	result_lbl.name = "Label"
-	result_lbl.add_theme_font_size_override("font_size", 20)
-	result_lbl.position = Vector2(20, 20)
-	result_lbl.size = Vector2(360, 160)
-	result_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	result_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	result_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_result_overlay.add_child(result_lbl)
-
-	var restart_btn := Button.new()
-	restart_btn.set_script(btn_script)
-	restart_btn.set("button_id", "restart")
-	restart_btn.text = "NEXT BREW →"
-	restart_btn.position = Vector2(W / 2 - 80, H / 2 + 110)
-	restart_btn.size = Vector2(160, 36)
-	restart_btn.visible = false
-	add_child(restart_btn)
-
-	# Show restart btn when result overlay appears
-	_result_overlay.visibility_changed.connect(func():
-		restart_btn.visible = _result_overlay.visible
-	)
+	_filter_next_btn = next_btn
