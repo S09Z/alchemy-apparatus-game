@@ -1,5 +1,8 @@
 # Godot
 .godot/
+
+# Tooling
+.serena/
 *.exe
 *.zip
 *.so

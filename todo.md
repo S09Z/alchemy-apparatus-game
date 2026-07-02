@@ -38,31 +38,31 @@
 
 ### Basic Scene Structure
 - [x] Create MainScene.tscn (main game scene)
-- [ ] Create BootScene.tscn (loading screen)
+- [x] Create BootScene.tscn (loading screen)
 - [ ] Create UIScene.tscn (UI overlays)
-- [ ] Set up scene hierarchy
-- [ ] Link scenes together
+- [x] Set up scene hierarchy
+- [x] Link scenes together
 - [ ] Test scene transitions
 
 ### Input System
-- [ ] Map keyboard inputs (for buttons)
-- [ ] Map mouse inputs (for levers - dragging)
-- [ ] Create InputManager.gd script
+- [x] Map keyboard inputs (for buttons)
+- [x] Map mouse inputs (for levers - dragging)
+- [x] Create InputManager.gd script
 - [ ] Test button press detection
 - [ ] Test lever drag detection
 - [ ] Create debug display (show input values)
 
 ### Graphics Placeholder
-- [ ] Create placeholder background (teal color)
-- [ ] Create simple button sprite (rectangular, colored)
-- [ ] Create simple lever sprite (line with circle)
-- [ ] Create simple gauge frame (circle outline)
-- [ ] Import into Godot
-- [ ] Position on screen in rough layout
+- [x] Create placeholder background (teal color)
+- [x] Create simple button sprite (rectangular, colored)
+- [x] Create simple lever sprite (line with circle)
+- [x] Create simple gauge frame (circle outline)
+- [x] Import into Godot
+- [x] Position on screen in rough layout
 
 ### Hello World Test
-- [ ] Spawn 6 colored buttons on screen
-- [ ] Make buttons clickable (print to console)
+- [x] Spawn 6 colored buttons on screen
+- [x] Make buttons clickable (print to console)
 - [ ] Create simple counter for each button
 - [ ] Display counter on button
 - [ ] Test in exported HTML5
@@ -73,48 +73,48 @@
 ## 🔧 PHASE 2: CORE MECHANICS (Week 3-4) - 30 hours
 
 ### Chemistry System Script
-- [ ] Create ChemistrySystem.gd
-- [ ] Define ingredient data structure
-- [ ] Create Ingredient class (name, type, properties)
-- [ ] Create Recipe class (ingredients, requirements, effects)
+- [x] Create ChemistrySystem.gd
+- [x] Define ingredient data structure
+- [x] Create Ingredient class (name, type, properties)
+- [x] Create Recipe class (ingredients, requirements, effects)
 - [ ] Write ingredient validation function
-- [ ] Write recipe matching function
-- [ ] Create purity calculation system
-- [ ] Create outcome determination function
+- [x] Write recipe matching function
+- [x] Create purity calculation system
+- [x] Create outcome determination function
 - [ ] Test with hardcoded recipes
 
 ### Recipe Manager
 - [ ] Create RecipeManager.gd
-- [ ] Define 3 starter recipes:
-  - [ ] Healing Potion
-  - [ ] Strength Boost
-  - [ ] Vision Clarity
+- [x] Define 3 starter recipes:
+  - [x] Healing Potion
+  - [x] Strength Boost
+  - [x] Vision Clarity
 - [ ] Implement recipe selection (random or queued)
-- [ ] Create recipe display data
-- [ ] Implement recipe progress tracking
+- [x] Create recipe display data
+- [x] Implement recipe progress tracking
 - [ ] Test recipe selection and display
 
 ### Machine Controller Script
-- [ ] Create MachineController.gd
-- [ ] Implement button press detection (all 6 buttons)
-- [ ] Implement lever state tracking (all 4 levers)
-- [ ] Create gauge update function
-- [ ] Implement reaction timer
-- [ ] Create state machine for machine (idle → heating → mixing → reacting → complete)
+- [x] Create MachineController.gd
+- [x] Implement button press detection (all 6 buttons)
+- [x] Implement lever state tracking (all 4 levers)
+- [x] Create gauge update function
+- [x] Implement reaction timer
+- [x] Create state machine for machine (idle → heating → mixing → reacting → complete)
 - [ ] Add basic logging
 
 ### Gauge System
-- [ ] Create GaugeAnimator.gd
-- [ ] Design pressure gauge (0-10 PSI):
-  - [ ] Create gauge sprite/shape
-  - [ ] Animate needle movement
-  - [ ] Update PSI value based on inputs
-  - [ ] Color zones (green/yellow/red)
-- [ ] Design temperature gauge:
-  - [ ] Create thermometer visual
-  - [ ] Animate liquid level
-  - [ ] Show temperature number
-  - [ ] Color code hot/cold
+- [x] Create GaugeAnimator.gd
+- [x] Design pressure gauge (0-10 PSI):
+  - [x] Create gauge sprite/shape
+  - [x] Animate needle movement
+  - [x] Update PSI value based on inputs
+  - [x] Color zones (green/yellow/red)
+- [x] Design temperature gauge:
+  - [x] Create thermometer visual
+  - [x] Animate liquid level
+  - [x] Show temperature number
+  - [x] Color code hot/cold
 - [ ] Design purity meter:
   - [ ] Create bar graphic
   - [ ] Update percentage value
