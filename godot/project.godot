@@ -18,6 +18,7 @@ config/features=PackedStringArray("4.3", "GL Compatibility")
 Constants="*res://scripts/Constants.gd"
 InputManager="*res://scripts/managers/InputManager.gd"
 ChemistrySystem="*res://scripts/systems/ChemistrySystem.gd"
+IngredientData="*res://scripts/data/IngredientData.gd"
 
 [display]
 

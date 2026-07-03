@@ -7,6 +7,7 @@ const RECIPES: Array[Dictionary] = [
 	{
 		"name": "Healing Potion",
 		"desc": "Soothe wounds and restore vitality.",
+		"ingredients": ["water", "mint_herb", "golden_essence"],
 		"min_temp": 40.0,
 		"max_temp": 70.0,
 		"min_pressure": 1.0,
@@ -18,6 +19,7 @@ const RECIPES: Array[Dictionary] = [
 	{
 		"name": "Strength Boost",
 		"desc": "Amplify muscle and will.",
+		"ingredients": ["water", "iron_dust", "crimson_sap"],
 		"min_temp": 55.0,
 		"max_temp": 85.0,
 		"min_pressure": 2.0,
@@ -29,6 +31,7 @@ const RECIPES: Array[Dictionary] = [
 	{
 		"name": "Vision Clarity",
 		"desc": "See past fog and shadow.",
+		"ingredients": ["moon_dew", "azure_crystal", "water"],
 		"min_temp": 30.0,
 		"max_temp": 55.0,
 		"min_pressure": 0.5,
