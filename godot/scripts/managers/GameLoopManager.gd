@@ -309,5 +309,34 @@ func _update_chamber_preview() -> void:
 	blended /= float(loaded_ingredients.size())
 	machine._chamber_fill.color = Color(0.15, 0.15, 0.2).lerp(blended, float(loaded_ingredients.size()) / total)
 
-func _update_result_panel(_success: bool, _purity: float, _stars: int, _prev_rep: int) -> void:
-	pass  # implemented in Task 7
+func _update_result_panel(success: bool, purity: float, stars: int, prev_rep: int) -> void:
+	if success:
+		var quality: String
+		if purity >= 80.0:
+			quality = "PERFECT"
+		elif purity >= 50.0:
+			quality = "GOOD"
+		else:
+			quality = "POOR"
+		_result_quality_label.text = quality
+		_result_quality_label.add_theme_color_override("font_color", Color(0.4, 1.0, 0.5))
+	else:
+		_result_quality_label.text = "FAILED"
+		_result_quality_label.add_theme_color_override("font_color", Color(1.0, 0.3, 0.2))
+
+	var star_str := ""
+	for i in 3:
+		star_str += "★" if i < stars else "☆"
+	_result_stars_label.text = star_str
+
+	_result_purity_label.text = "Purity: %.0f%%" % purity
+	_result_rep_label.text = "Reputation: %d ★ total" % reputation
+
+	var new_unlock := false
+	if prev_rep < 3 and reputation >= 3 and 1 in unlocked_recipes:
+		_result_unlock_label.text = "✦ Strength Boost recipe unlocked!"
+		new_unlock = true
+	elif prev_rep < 6 and reputation >= 6 and 2 in unlocked_recipes:
+		_result_unlock_label.text = "✦ Vision Clarity recipe unlocked!"
+		new_unlock = true
+	_result_unlock_label.visible = new_unlock

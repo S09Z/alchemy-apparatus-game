@@ -511,3 +511,12 @@ func _build_ui() -> void:
 	next_btn.size = Vector2(30, 26)
 	add_child(next_btn)
 	_filter_next_btn = next_btn
+
+	# ── Game loop manager — must be last child so panels render on top ──────────
+	var glm_script = load("res://scripts/managers/GameLoopManager.gd")
+	var glm := Control.new()
+	glm.set_script(glm_script)
+	glm.position = Vector2.ZERO
+	glm.size = Vector2(W, H)
+	add_child(glm)
+	glm.start(self)
